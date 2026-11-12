@@ -1,6 +1,6 @@
 {
   "name": "simple-directory-tree",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Outputs a JSON snapshot of a directory's paths, sizes, and file types.",
   "type": "module",
   "main": "src/index.js",
