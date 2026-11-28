@@ -24,3 +24,10 @@ Snapshot tests need a stable representation of a directory tree. The naive appro
 ## Edge cases
 
 Symlinks are followed by default, so a symlink to a file is recorded as a `file` with the target's size. If you want to record the link itself, pass `{ followSymlinks: false }`; the entry's `type` becomes `'symlink'` and `size` is the length of the link target string (matching `lstat`). Dangling symlinks are always recorded as `'symlink'` even when following, so they are not silently dropped. Directories are recorded with `size: 0`; the size of a directory is not meaningful for snapshot comparison. `maxDepth` limits recursion, with `0` meaning only the root's direct children. The root itself is never included in the output.
+
+## Design notes
+
+The window stores values eagerly rather than keeping running aggregates. Running
+sums drift with floating point over long streams, and recomputing from a small
+buffer is cheap enough that the drift is not worth the speed.
+
